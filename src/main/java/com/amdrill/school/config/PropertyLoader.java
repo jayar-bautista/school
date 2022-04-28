@@ -40,7 +40,7 @@ public class PropertyLoader {
 				properties.load(fis);
 			}
 		} catch (URISyntaxException | IOException e) {
-			logger.log(Level.INFO, "External properties not found trying to load internal properties : " + fileName);
+			logger.log(Level.INFO, "External properties not found trying to load internal properties {} ", fileName);
 			String inFileName = SLASH + fileName + PROPERTIES;
 			try (InputStream in = PropertyLoader.class.getResourceAsStream(inFileName)) {
 				properties = new Properties();

@@ -19,7 +19,7 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 	private final MongoRepository<D, K> mongoRepository;
 	private final Class<D> domainClass;
 
-	public BaseCrudService(MongoRepository<D, K> mongoRepository, Class<D> domainClass) {
+	protected BaseCrudService(MongoRepository<D, K> mongoRepository, Class<D> domainClass) {
 		super();
 		this.mongoRepository = mongoRepository;
 		this.domainClass = domainClass;
@@ -46,7 +46,7 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 	public List<O> read() {
 		List<D> results = mongoRepository.findAll();
 		List<O> outputs = new ArrayList<>();
-		results.forEach((result) -> {
+		results.forEach(result -> {
 			O output = (O) result.generateOutput();
 			outputs.add(output);
 		});

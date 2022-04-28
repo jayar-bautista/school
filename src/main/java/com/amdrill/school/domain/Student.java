@@ -14,7 +14,6 @@ public class Student extends BaseStudent implements Domain<String> {
 	private String id;
 
 	public Student() {
-		super();
 	}
 
 	public Student(StudentInput studentInput) {

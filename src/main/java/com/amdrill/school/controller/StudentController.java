@@ -10,7 +10,7 @@ import com.amdrill.school.service.CrudService;
 
 @RestController
 @RequestMapping(path = "/api/students")
-public class StudentController extends BaseController<StudentInput, StudentOutput, String> {
+public class StudentController extends BaseCrudController<StudentInput, StudentOutput, String> {
 
 	@Autowired
 	public StudentController(CrudService<StudentInput, StudentOutput, String> crudService) {

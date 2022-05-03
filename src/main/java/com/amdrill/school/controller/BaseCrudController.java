@@ -4,26 +4,23 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.amdrill.school.domain.ApiInput;
 import com.amdrill.school.domain.ApiOutput;
 import com.amdrill.school.service.CrudService;
 
-public class BaseController<I extends ApiInput, O extends ApiOutput, K> implements CrudController<I, O, K> {
-	private static final String SLASH = "/";
-	private CrudService<I, O, K> crudService;
+public class BaseCrudController<I extends ApiInput, O extends ApiOutput, K> implements CrudController<I, O, K> {
 
-	protected BaseController(CrudService<I, O, K> crudService) {
+	private final CrudService<I, O, K> crudService;
+
+	protected BaseCrudController(CrudService<I, O, K> crudService) {
 		this.crudService = crudService;
 	}
 
 	@Override
-	public ResponseEntity<String> create(I input) {
-		K id = crudService.create(input);
-		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequest();
-		String path = builder.toUriString() + SLASH + id;
-		return new ResponseEntity<>(path, HttpStatus.CREATED);
+	public ResponseEntity<O> create(I input) {
+		O result = crudService.create(input);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 
 	@Override
@@ -39,12 +36,17 @@ public class BaseController<I extends ApiInput, O extends ApiOutput, K> implemen
 	}
 
 	@Override
-	public void update(I input, K id) {
-		crudService.update(input, id);
+	public ResponseEntity<O> update(I input, K id) {
+		O result = crudService.update(input, id);
+		return ResponseEntity.ok(result);
 	}
 
 	@Override
 	public void delete(K id) {
 		crudService.delete(id);
+	}
+
+	public CrudService<I, O, K> getCrudService() {
+		return crudService;
 	}
 }

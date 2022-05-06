@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface CrudController<I, O, K> {
 
 	@PostMapping
-	ResponseEntity<String> create(@RequestBody I input);
+	ResponseEntity<O> create(@RequestBody I input);
 
 	@GetMapping(path = "/{id}")
 	ResponseEntity<O> read(@PathVariable K id);
@@ -22,7 +22,7 @@ public interface CrudController<I, O, K> {
 	ResponseEntity<List<O>> read();
 
 	@PutMapping(path = "/{id}")
-	void update(@RequestBody I input, @PathVariable K id);
+	ResponseEntity<O> update(@RequestBody I input, @PathVariable K id);
 
 	@DeleteMapping(path = "/{id}")
 	void delete(@PathVariable K id);

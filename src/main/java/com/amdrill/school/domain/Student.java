@@ -3,12 +3,14 @@ package com.amdrill.school.domain;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 
+import com.amdrill.school.domain.Student.StudentOutput;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Student extends BaseStudent implements Domain<String> {
+public class Student extends BaseStudent implements Domain<StudentOutput, String> {
 
 	@Id
 	private String id;

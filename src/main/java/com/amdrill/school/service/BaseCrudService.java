@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.assertj.core.util.VisibleForTesting;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.amdrill.school.domain.ApiInput;
@@ -13,7 +14,7 @@ import com.amdrill.school.domain.ApiOutput;
 import com.amdrill.school.domain.Domain;
 import com.amdrill.school.exception.CrudServiceException;
 
-public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O extends ApiOutput, K>
+public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput, O extends ApiOutput, K>
 		implements CrudService<I, O, K> {
 
 	private final MongoRepository<D, K> mongoRepository;
@@ -26,10 +27,10 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 	}
 
 	@Override
-	public K create(I input) {
+	public O create(I input) {
 		D domain = createDomain(input);
 		D result = mongoRepository.insert(domain);
-		return result.getId();
+		return result.generateOutput();
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 		Optional<D> optional = mongoRepository.findById(id);
 		if (optional.isPresent()) {
 			D result = optional.get();
-			return (O) result.generateOutput();
+			return result.generateOutput();
 		}
 		return null;
 	}
@@ -47,20 +48,22 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 		List<D> results = mongoRepository.findAll();
 		List<O> outputs = new ArrayList<>();
 		results.forEach(result -> {
-			O output = (O) result.generateOutput();
+			O output = result.generateOutput();
 			outputs.add(output);
 		});
 		return outputs;
 	}
 
 	@Override
-	public void update(I input, K id) {
+	public O update(I input, K id) {
 		boolean exists = mongoRepository.existsById(id);
 		if (exists) {
 			D domain = createDomain(input);
 			domain.setId(id);
-			mongoRepository.save(domain);
+			D result = mongoRepository.save(domain);
+			return result.generateOutput();
 		}
+		return null;
 	}
 
 	@Override
@@ -68,7 +71,12 @@ public abstract class BaseCrudService<D extends Domain<K>, I extends ApiInput, O
 		mongoRepository.deleteById(id);
 	}
 
-	private D createDomain(I input) {
+	public MongoRepository<D, K> getMongoRepository() {
+		return mongoRepository;
+	}
+
+	@VisibleForTesting
+	D createDomain(I input) {
 		try {
 			Constructor<D> constructor = domainClass.getConstructor(input.getClass());
 			return constructor.newInstance(input);

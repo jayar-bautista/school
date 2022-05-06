@@ -1,10 +1,10 @@
 package com.amdrill.school.domain;
 
-public interface Domain<T> {
+public interface Domain<O, K> {
 
-	void setId(T id);
+	void setId(K id);
 
-	T getId();
+	K getId();
 
-	ApiOutput generateOutput();
+	O generateOutput();
 }

@@ -24,8 +24,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.amdrill.school.domain.MockDomain;
-import com.amdrill.school.domain.MockDomain.MockApiInput;
-import com.amdrill.school.domain.MockDomain.MockApiOutput;
+import com.amdrill.school.dto.MockApiInput;
+import com.amdrill.school.dto.MockApiOutput;
 import com.amdrill.school.exception.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,7 +40,7 @@ public class BaseCrudServiceTest {
 	@Mock
 	private MongoRepository<DomainWithIssue, String> mongoRepositoryWithIssue;
 
-	private CrudService<MockApiInput, MockApiOutput, String> crudService;
+	private CrudService<MockApiInput, MockApiOutput> crudService;
 	private MockDomain mockDomain;
 
 	@BeforeEach
@@ -130,7 +130,7 @@ public class BaseCrudServiceTest {
 	@Test
 	public void givenApiInputWhenCreateDomainIsInvokedThenDomainIsReturned() {
 		MockApiInput mockApiInput = createApiInput();
-		BaseCrudService<MockDomain, MockApiInput, MockApiOutput, String> baseCrudService = new BaseCrudService<>(
+		BaseCrudService<MockDomain, MockApiInput, MockApiOutput> baseCrudService = new BaseCrudService<>(
 				mongoRepository, MockDomain.class) {
 		};
 
@@ -142,7 +142,7 @@ public class BaseCrudServiceTest {
 	@Test
 	public void givenApiInputWhenCreateDomainIsInvokedThenExceptionIsThrown() {
 		MockApiInput mockApiInput = createApiInput();
-		BaseCrudService<DomainWithIssue, MockApiInput, MockApiOutput, String> baseCrudService = new BaseCrudService<>(
+		BaseCrudService<DomainWithIssue, MockApiInput, MockApiOutput> baseCrudService = new BaseCrudService<>(
 				mongoRepositoryWithIssue, DomainWithIssue.class) {
 		};
 
@@ -153,7 +153,7 @@ public class BaseCrudServiceTest {
 		assertSame(ERROR_CREATING_DOMAIN, exception.getMessage());
 	}
 
-	private class MockBaseCrudService extends BaseCrudService<MockDomain, MockApiInput, MockApiOutput, String> {
+	private class MockBaseCrudService extends BaseCrudService<MockDomain, MockApiInput, MockApiOutput> {
 
 		protected MockBaseCrudService(MongoRepository<MockDomain, String> mongoRepository) {
 			super(mongoRepository, MockDomain.class);

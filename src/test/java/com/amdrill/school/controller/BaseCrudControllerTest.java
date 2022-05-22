@@ -20,17 +20,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import com.amdrill.school.domain.MockDomain;
-import com.amdrill.school.domain.MockDomain.MockApiInput;
-import com.amdrill.school.domain.MockDomain.MockApiOutput;
+import com.amdrill.school.dto.MockApiInput;
+import com.amdrill.school.dto.MockApiOutput;
 import com.amdrill.school.service.CrudService;
 
 @ExtendWith(MockitoExtension.class)
 public class BaseCrudControllerTest {
 
 	@Mock
-	private CrudService<MockApiInput, MockApiOutput, String> crudService;
+	private CrudService<MockApiInput, MockApiOutput> crudService;
 
-	private CrudController<MockApiInput, MockApiOutput, String> crudController;
+	private CrudController<MockApiInput, MockApiOutput> crudController;
 	private MockApiInput mockApiInput;
 	private MockDomain mockDomain;
 	private MockApiOutput mockOutput;
@@ -96,9 +96,9 @@ public class BaseCrudControllerTest {
 		verify(crudService, times(1)).delete(ID);
 	}
 
-	private class MockCrudController extends BaseCrudController<MockApiInput, MockApiOutput, String> {
+	private class MockCrudController extends BaseCrudController<MockApiInput, MockApiOutput> {
 
-		protected MockCrudController(CrudService<MockApiInput, MockApiOutput, String> crudService) {
+		protected MockCrudController(CrudService<MockApiInput, MockApiOutput> crudService) {
 			super(crudService);
 		}
 	}

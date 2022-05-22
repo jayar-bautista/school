@@ -1,4 +1,4 @@
-package com.amdrill.school.domain;
+package com.amdrill.school.dto;
 
 import lombok.Getter;
 import lombok.Setter;

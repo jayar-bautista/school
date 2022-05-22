@@ -1,19 +1,18 @@
 package com.amdrill.school.domain;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.Id;
 
-import com.amdrill.school.domain.Teacher.TeacherOutput;
+import com.amdrill.school.dto.TeacherInput;
+import com.amdrill.school.dto.TeacherOutput;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Teacher extends BaseTeacher implements Domain<TeacherOutput, String> {
+public class Teacher extends BaseUserDomain<TeacherOutput> {
 
-	@Id
-	private String id;
+	private String department;
 
 	public Teacher() {
 	}
@@ -27,14 +26,5 @@ public class Teacher extends BaseTeacher implements Domain<TeacherOutput, String
 		TeacherOutput teacherOutput = new TeacherOutput();
 		BeanUtils.copyProperties(this, teacherOutput);
 		return teacherOutput;
-	}
-
-	public static class TeacherInput extends BaseTeacher implements ApiInput {
-	}
-
-	@Getter
-	@Setter
-	public static class TeacherOutput extends BaseTeacher implements ApiOutput {
-		private String id;
 	}
 }

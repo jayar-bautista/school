@@ -13,9 +13,12 @@ import com.amdrill.school.domain.ApiInput;
 import com.amdrill.school.domain.ApiOutput;
 import com.amdrill.school.domain.Domain;
 import com.amdrill.school.exception.CrudServiceException;
+import com.amdrill.school.exception.EntityNotFoundException;
 
 public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput, O extends ApiOutput, K>
 		implements CrudService<I, O, K> {
+
+	private static final String NOT_FOUND = " not found";
 
 	private final MongoRepository<D, K> mongoRepository;
 	private final Class<D> domainClass;
@@ -40,7 +43,7 @@ public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput
 			D result = optional.get();
 			return result.generateOutput();
 		}
-		return null;
+		throw new EntityNotFoundException(domainClass.getSimpleName() + NOT_FOUND);
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput
 			D result = mongoRepository.save(domain);
 			return result.generateOutput();
 		}
-		return null;
+		throw new EntityNotFoundException(domainClass.getSimpleName() + NOT_FOUND);
 	}
 
 	@Override

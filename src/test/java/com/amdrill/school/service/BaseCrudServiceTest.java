@@ -4,7 +4,7 @@ import static com.amdrill.school.domain.MockDomain.ID;
 import static com.amdrill.school.domain.MockDomain.NAME;
 import static com.amdrill.school.domain.MockDomain.createApiInput;
 import static com.amdrill.school.domain.MockDomain.createDomain;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,11 +26,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.amdrill.school.domain.MockDomain;
 import com.amdrill.school.domain.MockDomain.MockApiInput;
 import com.amdrill.school.domain.MockDomain.MockApiOutput;
+import com.amdrill.school.exception.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class BaseCrudServiceTest {
 
 	private static final String ERROR_CREATING_DOMAIN = "Error encountered while creating domain instance";
+	private static final String MOCK_DOMAIN_NOT_FOUND = "MockDomain not found";
 
 	@Mock
 	private MongoRepository<MockDomain, String> mongoRepository;
@@ -70,11 +72,14 @@ public class BaseCrudServiceTest {
 
 	@Test
 	public void givenMongoRepositoryWhenReadWithIdIsCalledThenNullIsReturned() {
-		when(mongoRepository.findById(mockDomain.getId())).thenReturn(Optional.empty());
+		String id = mockDomain.getId();
+		when(mongoRepository.findById(id)).thenReturn(Optional.empty());
 
-		MockApiOutput result = crudService.read(mockDomain.getId());
+		Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+			crudService.read(id);
+		});
 
-		assertNull(result);
+		assertEquals(MOCK_DOMAIN_NOT_FOUND, exception.getMessage());
 	}
 
 	@Test
@@ -104,13 +109,15 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenDomainDoesNotExistsThenSaveIsInvoked() {
+	public void givenMongoRepositoryWhenDomainDoesNotExistsThenEntityNotFoundExceptionIsThrown() {
 		MockApiInput apiInput = createApiInput();
 		when(mongoRepository.existsById(ID)).thenReturn(false);
 
-		MockApiOutput result = crudService.update(apiInput, ID);
+		Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+			crudService.update(apiInput, ID);
+		});
 
-		assertNull(result);
+		assertEquals(MOCK_DOMAIN_NOT_FOUND, exception.getMessage());
 	}
 
 	@Test
@@ -143,9 +150,7 @@ public class BaseCrudServiceTest {
 			baseCrudService.createDomain(mockApiInput);
 		});
 
-		String actualMessage = exception.getMessage();
-
-		assertSame(ERROR_CREATING_DOMAIN, actualMessage);
+		assertSame(ERROR_CREATING_DOMAIN, exception.getMessage());
 	}
 
 	private class MockBaseCrudService extends BaseCrudService<MockDomain, MockApiInput, MockApiOutput, String> {

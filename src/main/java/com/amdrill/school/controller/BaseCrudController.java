@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.amdrill.school.domain.ApiInput;
-import com.amdrill.school.domain.ApiOutput;
+import com.amdrill.school.dto.ApiInput;
+import com.amdrill.school.dto.ApiOutput;
 import com.amdrill.school.service.CrudService;
 
-public class BaseCrudController<I extends ApiInput, O extends ApiOutput, K> implements CrudController<I, O, K> {
+public class BaseCrudController<I extends ApiInput, O extends ApiOutput> implements CrudController<I, O> {
 
-	private final CrudService<I, O, K> crudService;
+	private final CrudService<I, O> crudService;
 
-	protected BaseCrudController(CrudService<I, O, K> crudService) {
+	protected BaseCrudController(CrudService<I, O> crudService) {
 		this.crudService = crudService;
 	}
 
@@ -24,7 +24,7 @@ public class BaseCrudController<I extends ApiInput, O extends ApiOutput, K> impl
 	}
 
 	@Override
-	public ResponseEntity<O> read(K id) {
+	public ResponseEntity<O> read(String id) {
 		O result = crudService.read(id);
 		return ResponseEntity.ok(result);
 	}
@@ -36,17 +36,17 @@ public class BaseCrudController<I extends ApiInput, O extends ApiOutput, K> impl
 	}
 
 	@Override
-	public ResponseEntity<O> update(I input, K id) {
+	public ResponseEntity<O> update(I input, String id) {
 		O result = crudService.update(input, id);
 		return ResponseEntity.ok(result);
 	}
 
 	@Override
-	public void delete(K id) {
+	public void delete(String id) {
 		crudService.delete(id);
 	}
 
-	public CrudService<I, O, K> getCrudService() {
+	public CrudService<I, O> getCrudService() {
 		return crudService;
 	}
 }

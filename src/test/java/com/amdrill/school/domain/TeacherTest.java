@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
-import com.amdrill.school.domain.Teacher.TeacherInput;
-import com.amdrill.school.domain.Teacher.TeacherOutput;
+import com.amdrill.school.dto.TeacherInput;
+import com.amdrill.school.dto.TeacherOutput;
 
 public class TeacherTest {
 	@Test

@@ -1,4 +1,4 @@
-package com.amdrill.school.domain;
+package com.amdrill.school.dto;
 
 import javax.validation.constraints.NotEmpty;
 

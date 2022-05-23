@@ -2,15 +2,15 @@ package com.amdrill.school.service;
 
 import java.util.List;
 
-public interface CrudService<I, O, K> {
+public interface CrudService<I, O> {
 
 	O create(I input);
 
-	O read(K id);
+	O read(String id);
 
 	List<O> read();
 
-	O update(I input, K id);
+	O update(I input, String id);
 
-	void delete(K id);
+	void delete(String id);
 }

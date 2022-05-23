@@ -1,23 +1,22 @@
 package com.amdrill.school.domain;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.Id;
 
-import com.amdrill.school.domain.MockDomain.MockApiOutput;
+import com.amdrill.school.dto.MockApiInput;
+import com.amdrill.school.dto.MockApiOutput;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MockDomain extends BaseMockDomain implements Domain<MockApiOutput, String> {
+public class MockDomain extends BaseDomain<MockApiOutput> {
 
 	public static final String UPDATED_NAME = "UpdatedTestName";
 	public static final String NAME = "TestName";
 	public static final String ID = "TestId";
 
-	@Id
-	private String id;
+	private String name;
 
 	public MockDomain() {
 	}
@@ -32,15 +31,6 @@ public class MockDomain extends BaseMockDomain implements Domain<MockApiOutput, 
 		return mockApiOutput;
 	}
 
-	public static class MockApiInput extends BaseMockDomain implements ApiInput {
-	}
-
-	@Getter
-	@Setter
-	public static class MockApiOutput extends BaseMockDomain implements ApiOutput {
-		private String id;
-	}
-
 	public static MockApiInput createApiInput() {
 		MockApiInput mockApiInput = new MockApiInput();
 		mockApiInput.setName(NAME);
@@ -53,11 +43,4 @@ public class MockDomain extends BaseMockDomain implements Domain<MockApiOutput, 
 		mockDomain.setId(ID);
 		return mockDomain;
 	}
-
-}
-
-@Getter
-@Setter
-abstract class BaseMockDomain {
-	private String name;
 }

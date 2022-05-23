@@ -9,21 +9,21 @@ import java.util.Optional;
 import org.assertj.core.util.VisibleForTesting;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.amdrill.school.domain.ApiInput;
-import com.amdrill.school.domain.ApiOutput;
-import com.amdrill.school.domain.Domain;
+import com.amdrill.school.domain.BaseDomain;
+import com.amdrill.school.dto.ApiInput;
+import com.amdrill.school.dto.ApiOutput;
 import com.amdrill.school.exception.CrudServiceException;
 import com.amdrill.school.exception.EntityNotFoundException;
 
-public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput, O extends ApiOutput, K>
-		implements CrudService<I, O, K> {
+public abstract class BaseCrudService<D extends BaseDomain<O>, I extends ApiInput, O extends ApiOutput>
+		implements CrudService<I, O> {
 
 	private static final String NOT_FOUND = " not found";
 
-	private final MongoRepository<D, K> mongoRepository;
+	private final MongoRepository<D, String> mongoRepository;
 	private final Class<D> domainClass;
 
-	protected BaseCrudService(MongoRepository<D, K> mongoRepository, Class<D> domainClass) {
+	protected BaseCrudService(MongoRepository<D, String> mongoRepository, Class<D> domainClass) {
 		super();
 		this.mongoRepository = mongoRepository;
 		this.domainClass = domainClass;
@@ -37,7 +37,7 @@ public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput
 	}
 
 	@Override
-	public O read(K id) {
+	public O read(String id) {
 		Optional<D> optional = mongoRepository.findById(id);
 		if (optional.isPresent()) {
 			D result = optional.get();
@@ -58,7 +58,7 @@ public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput
 	}
 
 	@Override
-	public O update(I input, K id) {
+	public O update(I input, String id) {
 		boolean exists = mongoRepository.existsById(id);
 		if (exists) {
 			D domain = createDomain(input);
@@ -70,11 +70,11 @@ public abstract class BaseCrudService<D extends Domain<O, K>, I extends ApiInput
 	}
 
 	@Override
-	public void delete(K id) {
+	public void delete(String id) {
 		mongoRepository.deleteById(id);
 	}
 
-	public MongoRepository<D, K> getMongoRepository() {
+	public MongoRepository<D, String> getMongoRepository() {
 		return mongoRepository;
 	}
 

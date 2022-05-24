@@ -23,7 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.amdrill.school.domain.ErrorResponse;
 
 @ExtendWith(MockitoExtension.class)
-public class RestApiResponseEntityExceptionHandlerTest {
+class RestApiResponseEntityExceptionHandlerTest {
 
 	private static final String TEST_KEY = "testKey";
 	private static final String TEST_VALUE = "testValue";
@@ -46,7 +46,7 @@ public class RestApiResponseEntityExceptionHandlerTest {
 	}
 
 	@Test
-	public void givenObjectErrorsWhenHandleMethodArgumentNotValidIsExecutedThenErrorsContainMissingKey() {
+	void givenObjectErrorsWhenHandleMethodArgumentNotValidIsExecutedThenErrorsContainMissingKey() {
 		List<ObjectError> objectErrors = Collections.singletonList(new ObjectError(TEST_KEY, MISSING_KEY));
 		when(methodArgumentNotValidException.getAllErrors()).thenReturn(objectErrors);
 
@@ -61,7 +61,7 @@ public class RestApiResponseEntityExceptionHandlerTest {
 	}
 
 	@Test
-	public void givenObjectErrorsWhenHandleMethodArgumentNotValidIsExecutedThenErrorsContainMissingValue() {
+	void givenObjectErrorsWhenHandleMethodArgumentNotValidIsExecutedThenErrorsContainMissingValue() {
 		List<ObjectError> objectErrors = Collections.singletonList(new FieldError(TEST_KEY, TEST_VALUE, MISSING_VALUE));
 		when(methodArgumentNotValidException.getAllErrors()).thenReturn(objectErrors);
 
@@ -76,7 +76,7 @@ public class RestApiResponseEntityExceptionHandlerTest {
 	}
 
 	@Test
-	public void givenRuntimeExceptionWhenHandleEntityNotFOundIsExecutedThenNotFoundErrorIsReturned() {
+	void givenRuntimeExceptionWhenHandleEntityNotFOundIsExecutedThenNotFoundErrorIsReturned() {
 		when(runtimeException.getMessage()).thenReturn(ENTITY_NOT_FOUND);
 
 		ResponseEntity<Object> result = exceptionHandler.handleEntityNotFOund(runtimeException, request);

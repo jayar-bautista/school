@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import com.amdrill.school.dto.SubjectInput;
 import com.amdrill.school.dto.SubjectOutput;
 
-public class SubjectTest {
+class SubjectTest {
+
 	@Test
-	public void givenSubjectWhenGenerateOutputIsInvokedThenSubjectOutputIsCreated() {
+	void givenSubjectWhenGenerateOutputIsInvokedThenSubjectOutputIsCreated() {
 		SubjectInput subjectInput = new SubjectInput();
 		subjectInput.setName(NAME);
 		Subject subject = new Subject(subjectInput);
@@ -25,7 +26,7 @@ public class SubjectTest {
 	}
 
 	@Test
-	public void givenSubjectWhenGenerateOutputIsInvokedThenSubjectOutputIdIsNull() {
+	void givenSubjectWhenGenerateOutputIsInvokedThenSubjectOutputIdIsNull() {
 		Subject subject = new Subject();
 
 		SubjectOutput subjectOutput = subject.generateOutput();

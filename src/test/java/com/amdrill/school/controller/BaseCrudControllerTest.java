@@ -25,7 +25,7 @@ import com.amdrill.school.dto.MockApiOutput;
 import com.amdrill.school.service.CrudService;
 
 @ExtendWith(MockitoExtension.class)
-public class BaseCrudControllerTest {
+class BaseCrudControllerTest {
 
 	@Mock
 	private CrudService<MockApiInput, MockApiOutput> crudService;
@@ -36,7 +36,7 @@ public class BaseCrudControllerTest {
 	private MockApiOutput mockOutput;
 
 	@BeforeEach
-	public void init() {
+	void init() {
 		crudController = new MockCrudController(crudService);
 		mockApiInput = createApiInput();
 		mockDomain = createDomain();
@@ -44,7 +44,7 @@ public class BaseCrudControllerTest {
 	}
 
 	@Test
-	public void givenMockApiInputWhenCreateIsInvokedThenMockApiOutputIsReturned() {
+	void givenMockApiInputWhenCreateIsInvokedThenMockApiOutputIsReturned() {
 		when(crudService.create(mockApiInput)).thenReturn(mockOutput);
 
 		ResponseEntity<MockApiOutput> responseEntity = crudController.create(mockApiInput);
@@ -55,7 +55,7 @@ public class BaseCrudControllerTest {
 	}
 
 	@Test
-	public void givenIdWhenReadIsInvokedThenMockApiOutputIsReturned() {
+	void givenIdWhenReadIsInvokedThenMockApiOutputIsReturned() {
 		when(crudService.read(ID)).thenReturn(mockOutput);
 
 		ResponseEntity<MockApiOutput> responseEntity = crudController.read(ID);
@@ -66,7 +66,7 @@ public class BaseCrudControllerTest {
 	}
 
 	@Test
-	public void givenCrudServiceWhenReadIsInvokedThenMockApiOutputIsReturned() {
+	void givenCrudServiceWhenReadIsInvokedThenMockApiOutputIsReturned() {
 		List<MockApiOutput> mockApiOutputs = Collections.singletonList(mockOutput);
 		when(crudService.read()).thenReturn(mockApiOutputs);
 
@@ -79,7 +79,7 @@ public class BaseCrudControllerTest {
 	}
 
 	@Test
-	public void givenMockApiInputWhenUpdateIsInvokedThenMockApiOutputIsReturned() {
+	void givenMockApiInputWhenUpdateIsInvokedThenMockApiOutputIsReturned() {
 		when(crudService.update(mockApiInput, ID)).thenReturn(mockOutput);
 
 		ResponseEntity<MockApiOutput> responseEntity = crudController.update(mockApiInput, ID);
@@ -90,7 +90,7 @@ public class BaseCrudControllerTest {
 	}
 
 	@Test
-	public void givenIdWhenDeleteIsInvokedThenCrudServiceDeleteIsCalled() {
+	void givenIdWhenDeleteIsInvokedThenCrudServiceDeleteIsCalled() {
 		crudController.delete(ID);
 
 		verify(crudService, times(1)).delete(ID);

@@ -29,7 +29,7 @@ import com.amdrill.school.dto.MockApiOutput;
 import com.amdrill.school.exception.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
-public class BaseCrudServiceTest {
+class BaseCrudServiceTest {
 
 	private static final String ERROR_CREATING_DOMAIN = "Error encountered while creating domain instance";
 	private static final String MOCK_DOMAIN_NOT_FOUND = "MockDomain not found";
@@ -50,7 +50,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenCreateIsCalledThenIdIsReturned() {
+	void givenMongoRepositoryWhenCreateIsCalledThenIdIsReturned() {
 		MockApiInput apiInput = createApiInput();
 		when(mongoRepository.insert(any(MockDomain.class))).thenReturn(mockDomain);
 
@@ -61,7 +61,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenReadWithIdIsCalledThenStudentOutputIsReturned() {
+	void givenMongoRepositoryWhenReadWithIdIsCalledThenStudentOutputIsReturned() {
 		when(mongoRepository.findById(mockDomain.getId())).thenReturn(Optional.of(mockDomain));
 
 		MockApiOutput result = crudService.read(mockDomain.getId());
@@ -71,7 +71,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenReadWithIdIsCalledThenNullIsReturned() {
+	void givenMongoRepositoryWhenReadWithIdIsCalledThenNullIsReturned() {
 		String id = mockDomain.getId();
 		when(mongoRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -83,7 +83,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenReadIsCalledThenStudentOutputsIsReturned() {
+	void givenMongoRepositoryWhenReadIsCalledThenStudentOutputsIsReturned() {
 		List<MockDomain> domains = Collections.singletonList(mockDomain);
 		when(mongoRepository.findAll()).thenReturn(domains);
 
@@ -97,7 +97,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenDomainExistsThenSaveIsInvoked() {
+	void givenMongoRepositoryWhenDomainExistsThenSaveIsInvoked() {
 		MockApiInput apiInput = createApiInput();
 		when(mongoRepository.existsById(ID)).thenReturn(true);
 		when(mongoRepository.save(any(MockDomain.class))).thenReturn(mockDomain);
@@ -109,7 +109,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenDomainDoesNotExistsThenEntityNotFoundExceptionIsThrown() {
+	void givenMongoRepositoryWhenDomainDoesNotExistsThenEntityNotFoundExceptionIsThrown() {
 		MockApiInput apiInput = createApiInput();
 		when(mongoRepository.existsById(ID)).thenReturn(false);
 
@@ -121,14 +121,14 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenMongoRepositoryWhenDeleteIsExecutedThenRepositoryDeleteIsInvoked() {
+	void givenMongoRepositoryWhenDeleteIsExecutedThenRepositoryDeleteIsInvoked() {
 		crudService.delete(ID);
 
 		verify(mongoRepository, times(1)).deleteById(ID);
 	}
 
 	@Test
-	public void givenApiInputWhenCreateDomainIsInvokedThenDomainIsReturned() {
+	void givenApiInputWhenCreateDomainIsInvokedThenDomainIsReturned() {
 		MockApiInput mockApiInput = createApiInput();
 		BaseCrudService<MockDomain, MockApiInput, MockApiOutput> baseCrudService = new BaseCrudService<>(
 				mongoRepository, MockDomain.class) {
@@ -140,7 +140,7 @@ public class BaseCrudServiceTest {
 	}
 
 	@Test
-	public void givenApiInputWhenCreateDomainIsInvokedThenExceptionIsThrown() {
+	void givenApiInputWhenCreateDomainIsInvokedThenExceptionIsThrown() {
 		MockApiInput mockApiInput = createApiInput();
 		BaseCrudService<DomainWithIssue, MockApiInput, MockApiOutput> baseCrudService = new BaseCrudService<>(
 				mongoRepositoryWithIssue, DomainWithIssue.class) {

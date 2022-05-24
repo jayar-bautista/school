@@ -16,7 +16,7 @@ import com.mongodb.connection.ClusterDescription;
 import com.mongodb.connection.ClusterSettings;
 
 @ExtendWith(MockitoExtension.class)
-public class MongoConfigTest {
+class MongoConfigTest {
 
 	private static final String MONGO_HOST = "MONGO_HOST";
 	private static final String MONGO_PORT = "MONGO_PORT";
@@ -30,7 +30,7 @@ public class MongoConfigTest {
 	private PropertyLoader propertyLoader;
 
 	@Test
-	public void givenMongoConfigWhenMongoClientIsCalledThenMongoClientIsCreated() {
+	void givenMongoConfigWhenMongoClientIsCalledThenMongoClientIsCreated() {
 		when(propertyLoader.getValueOf(MONGO_HOST)).thenReturn(HOST_VALUE);
 		when(propertyLoader.getValueOf(MONGO_PORT)).thenReturn(PORT_VALUE);
 		MongoConfig mongoConfig = new MongoConfig(propertyLoader);
@@ -43,7 +43,7 @@ public class MongoConfigTest {
 	}
 
 	@Test
-	public void givenMongoConfigWhenGetDatabaseNameIsExecutedThenDatabaseNameIsReturned() {
+	void givenMongoConfigWhenGetDatabaseNameIsExecutedThenDatabaseNameIsReturned() {
 		MongoConfig mongoConfig = new MongoConfig(propertyLoader);
 
 		String result = mongoConfig.getDatabaseName();
@@ -52,7 +52,7 @@ public class MongoConfigTest {
 	}
 
 	@Test
-	public void givenMongoConfigWhenGetMappingBasePackagesIsExecutedThenPackageDomainIsReturned() {
+	void givenMongoConfigWhenGetMappingBasePackagesIsExecutedThenPackageDomainIsReturned() {
 		MongoConfig mongoConfig = new MongoConfig(propertyLoader);
 
 		Collection<String> results = mongoConfig.getMappingBasePackages();

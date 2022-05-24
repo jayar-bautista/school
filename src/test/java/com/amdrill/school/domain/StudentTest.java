@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import com.amdrill.school.dto.StudentInput;
 import com.amdrill.school.dto.StudentOutput;
 
-public class StudentTest {
+class StudentTest {
 
 	@Test
-	public void givenStudentWhenGenerateOutputIsInvokedThenStudentOutputIsCreated() {
+	void givenStudentWhenGenerateOutputIsInvokedThenStudentOutputIsCreated() {
 		StudentInput studentInput = new StudentInput();
 		studentInput.setFirstName(NAME);
 		Student student = new Student(studentInput);
@@ -26,7 +26,7 @@ public class StudentTest {
 	}
 
 	@Test
-	public void givenStudentWhenGenerateOutputIsInvokedThenStudentOutputIdIsNull() {
+	void givenStudentWhenGenerateOutputIsInvokedThenStudentOutputIdIsNull() {
 		Student student = new Student();
 
 		StudentOutput studentOutput = student.generateOutput();

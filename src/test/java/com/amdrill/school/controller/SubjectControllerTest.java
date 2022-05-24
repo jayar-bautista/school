@@ -9,12 +9,12 @@ import com.amdrill.school.dto.SubjectInput;
 import com.amdrill.school.dto.SubjectOutput;
 import com.amdrill.school.service.CrudService;
 
-public class SubjectControllerTest {
+class SubjectControllerTest {
 	@Mock
 	private CrudService<SubjectInput, SubjectOutput> crudService;
 
 	@Test
-	public void givenCrudServiceWhenConstructorIsInvokedThenCru() {
+	void givenCrudServiceWhenConstructorIsInvokedThenCru() {
 		SubjectController subjectController = new SubjectController(crudService);
 
 		assertSame(crudService, subjectController.getCrudService());

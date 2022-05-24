@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import com.amdrill.school.dto.TeacherInput;
 import com.amdrill.school.dto.TeacherOutput;
 
-public class TeacherTest {
+class TeacherTest {
+
 	@Test
-	public void givenTeacherWhenGenerateOutputIsInvokedThenTeacherOutputIsCreated() {
+	void givenTeacherWhenGenerateOutputIsInvokedThenTeacherOutputIsCreated() {
 		TeacherInput teacherInput = new TeacherInput();
 		teacherInput.setFirstName(NAME);
 		Teacher teacher = new Teacher(teacherInput);
@@ -25,7 +26,7 @@ public class TeacherTest {
 	}
 
 	@Test
-	public void givenTeacherWhenGenerateOutputIsInvokedThenTeacherOutputIdIsNull() {
+	void givenTeacherWhenGenerateOutputIsInvokedThenTeacherOutputIdIsNull() {
 		Teacher teacher = new Teacher();
 
 		TeacherOutput teacherOutput = teacher.generateOutput();

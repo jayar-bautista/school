@@ -1,4 +1,4 @@
 package com.amdrill.school.dto;
 
-public class TeacherInput extends BaseTeacher implements ApiInput {
+public class TeacherInput extends BaseTeacherDto implements ApiInput {
 }

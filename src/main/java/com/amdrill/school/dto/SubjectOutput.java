@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentOutput extends BaseStudentDto implements ApiOutput {
+public class SubjectOutput extends BaseSubjectDto implements ApiOutput {
 	private String id;
 }

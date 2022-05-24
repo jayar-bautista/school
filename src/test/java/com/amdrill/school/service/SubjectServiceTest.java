@@ -8,12 +8,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.amdrill.school.domain.Subject;
 
-public class SubjectServiceTest {
+class SubjectServiceTest {
 	@Mock
 	private MongoRepository<Subject, String> mongoRepository;
-	
+
 	@Test
-	public void givenMongoRepositoryWhenSubjectServiceConstructorIsCalledThenFieldIsAssigned() {
+	void givenMongoRepositoryWhenSubjectServiceConstructorIsCalledThenFieldIsAssigned() {
 		SubjectService subjectService = new SubjectService(mongoRepository);
 
 		assertSame(mongoRepository, subjectService.getMongoRepository());

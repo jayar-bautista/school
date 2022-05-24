@@ -9,13 +9,13 @@ import com.amdrill.school.dto.TeacherInput;
 import com.amdrill.school.dto.TeacherOutput;
 import com.amdrill.school.service.CrudService;
 
-public class TeacherControllerTest {
+class TeacherControllerTest {
 
 	@Mock
 	private CrudService<TeacherInput, TeacherOutput> crudService;
 
 	@Test
-	public void givenTeacherControllerWhenConstructorIsInvokedThenCrudServiceIsSaved() {
+	void givenTeacherControllerWhenConstructorIsInvokedThenCrudServiceIsSaved() {
 		TeacherController teacherController = new TeacherController(crudService);
 
 		assertSame(crudService, teacherController.getCrudService());

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseStudent extends BaseUser {
+public abstract class BaseStudentDto extends BaseUserDto {
 	private String grade;
 	private String schoolYear;
 	private String section;

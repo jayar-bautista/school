@@ -7,14 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseUser {
+public abstract class BaseSubjectDto {
 
 	@NotEmpty
-	private String firstName;
+	private String name;
 	@NotEmpty
-	private String middleName;
+	private String grade;
 	@NotEmpty
-	private String lastName;
-	@NotEmpty
-	private String birthdate;
+	private String description;
 }

@@ -6,3 +6,6 @@ School Management System Rest API
 2) cd {path_to_project}/school
 3) Run gradlew bootRun 
 4) Access the API: http://localhost:8080/school-api/swagger-ui/index.html
+
+**Code analysis - SonarCloud**
+https://sonarcloud.io/project/overview?id=jayar-bautista_school

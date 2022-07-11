@@ -49,7 +49,7 @@ tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
 
     reports {
         xml.enabled = true
-	xml.destination "${github.workspace}/build/jacocoReport/test/xml"
+	xml.destination "${{ github.workspace }}/build/jacocoReport/test/xml"
 	html.enabled = true
     }
 

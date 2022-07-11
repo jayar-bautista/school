@@ -47,6 +47,12 @@ tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for the test build."
 
+    reports {
+        xml.enabled = true
+	xml.destination "${github.workspace}/build/jacocoReport/test/xml"
+	html.enabled = true
+    }
+
     def excludes = [
             '**/*Test*.*',
             '**/utils/*.*'
